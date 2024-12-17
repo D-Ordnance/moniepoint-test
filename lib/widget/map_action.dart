@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:moniepoint_test/theme/theme.dart';
 import 'package:moniepoint_test/widget/bottom_nav_item.dart';
@@ -37,9 +35,11 @@ class _MapActionState extends State<MapAction> {
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: TestColors.boxColor1.withOpacity(0.8)),
+                      color: TestColors.white.withOpacity(0.5)),
                   child: SvgPicture.asset(
-                    'asset/image/wallet.svg',
+                    widget.isWallet
+                        ? 'asset/image/wallet.svg'
+                        : 'asset/image/big_layer.svg',
                     width: 24,
                     height: 24,
                   ),
@@ -53,7 +53,7 @@ class _MapActionState extends State<MapAction> {
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: TestColors.boxColor1.withOpacity(0.8)),
+                    color: TestColors.white.withOpacity(0.5)),
                 child: SvgPicture.asset(
                   'asset/image/navigation2.svg',
                   width: 24,
@@ -68,7 +68,7 @@ class _MapActionState extends State<MapAction> {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             decoration: BoxDecoration(
-                color: TestColors.boxColor1.withOpacity(0.8),
+                color: TestColors.white.withOpacity(0.5),
                 borderRadius: const BorderRadius.all(Radius.circular(25))),
             child: Row(
               children: [
@@ -80,6 +80,7 @@ class _MapActionState extends State<MapAction> {
                 const SizedBox(width: 6),
                 const MoniePointText(
                     fontSize: 15,
+                    fontWeight: FontWeight.w600,
                     content: 'List of variants',
                     color: TestColors.white)
               ],

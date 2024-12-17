@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:moniepoint_test/theme/theme.dart';
+import 'package:moniepoint_test/widget/outline_button.dart';
 
 typedef OnTap = Function();
 
@@ -16,10 +17,10 @@ class MoniePointBottomNavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return OutlinedButtonRippleEffect(
       onTap: onTap,
-      onTapUp: (details) => debugPrint("something up"),
-      onTapDown: (details) => debugPrint("something down"),
+      // onTapUp: (details) => debugPrint("something up"),
+      // onTapDown: (details) => debugPrint("something down"),
       child: Container(
         padding: EdgeInsets.all(isSelected ? 15 : 10),
         decoration: BoxDecoration(

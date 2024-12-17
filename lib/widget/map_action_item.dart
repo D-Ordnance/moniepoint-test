@@ -33,6 +33,7 @@ class MoreActionItem extends StatelessWidget {
           const SizedBox(width: 10),
           MoniePointText(
               fontSize: 14,
+              fontWeight: FontWeight.w600,
               content: content,
               textAlign: TextAlign.start,
               lineSpacing: 1,

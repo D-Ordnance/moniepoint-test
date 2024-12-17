@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:moniepoint_test/widget/bottom_nav_bar.dart';
 import 'package:moniepoint_test/widget/map_action.dart';
+import 'package:moniepoint_test/widget/map_marker.dart';
 import 'package:moniepoint_test/widget/more_map_actions.dart';
 import 'package:moniepoint_test/widget/regular_textfield.dart';
 
@@ -18,8 +21,14 @@ class _MoniePointMapState extends State<MoniePointMap>
   late Animation<double> _scaleAnimation;
   late AnimationController _scaleAnimationController;
 
+  late Animation<double> _scaleMapMakerAnimation;
+  late AnimationController _scaleMapMakerAnimationController;
+
   late Animation<double> _scaleMapPropertiesAnimation;
   late AnimationController _scaleMapPropertiesAnimationController;
+
+  late Animation<double> _sizeMapMarkerAnimation;
+  late AnimationController _sizeMapMakerAnimationController;
 
   @override
   void initState() {
@@ -33,6 +42,14 @@ class _MoniePointMapState extends State<MoniePointMap>
       curve: Curves.fastOutSlowIn,
     );
 
+    _scaleMapMakerAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1000));
+
+    _scaleMapMakerAnimation = CurvedAnimation(
+      parent: _scaleMapMakerAnimationController,
+      curve: Curves.fastOutSlowIn,
+    );
+
     _scaleMapPropertiesAnimationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1000));
 
@@ -42,7 +59,27 @@ class _MoniePointMapState extends State<MoniePointMap>
     );
 
     _scaleMapPropertiesAnimationController.forward();
+
+    Timer(const Duration(milliseconds: 1050), () {
+      _scaleMapMakerAnimationController.forward();
+    });
+
+    _sizeMapMakerAnimationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1000));
+
+    _sizeMapMarkerAnimation = CurvedAnimation(
+      parent: _sizeMapMakerAnimationController,
+      curve: Curves.fastOutSlowIn,
+    );
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scaleAnimationController.dispose();
+    _scaleMapPropertiesAnimationController.dispose();
+    _sizeMapMakerAnimationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -54,6 +91,11 @@ class _MoniePointMapState extends State<MoniePointMap>
         height: double.infinity,
         child: Stack(
           children: [
+            Positioned.fill(
+                child: Image.asset(
+              'asset/image/map.png',
+              fit: BoxFit.cover,
+            )),
             Positioned(
               left: 20,
               top: 80,
@@ -62,6 +104,30 @@ class _MoniePointMapState extends State<MoniePointMap>
                 scaleAnimation: _scaleMapPropertiesAnimation,
               ),
             ),
+            Positioned(
+                left: 100,
+                top: 200,
+                child: MoniePointMapMaker(
+                  isWallet: isWallet,
+                  scaleAnimation: _scaleMapMakerAnimation,
+                  sizeAnimation: _sizeMapMarkerAnimation,
+                )),
+            Positioned(
+                left: 250,
+                top: 300,
+                child: MoniePointMapMaker(
+                  isWallet: isWallet,
+                  scaleAnimation: _scaleMapMakerAnimation,
+                  sizeAnimation: _sizeMapMarkerAnimation,
+                )),
+            Positioned(
+                left: 60,
+                top: 400,
+                child: MoniePointMapMaker(
+                  isWallet: isWallet,
+                  scaleAnimation: _scaleMapMakerAnimation,
+                  sizeAnimation: _sizeMapMarkerAnimation,
+                )),
             Positioned(
                 left: 20,
                 right: 20,
@@ -78,6 +144,15 @@ class _MoniePointMapState extends State<MoniePointMap>
                 child: MoreMapAction(
                   scaleAnimationController: _scaleAnimationController,
                   scaleAnimation: _scaleAnimation,
+                  onTap: (p0) {
+                    if (p0 == MarkerSelection.wallet) {
+                      setState(() {
+                        isWallet = true;
+                      });
+                    } else if (p0 == MarkerSelection.withoutLayout) {
+                      isWallet = false;
+                    }
+                  },
                 )),
             const MoniePointBottomNavBar(
               isLocationSelected: true,

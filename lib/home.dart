@@ -64,10 +64,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   void _bottomNavBarTransition() {
     _bottomNavBarSlideAnimationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000));
+        vsync: this, duration: const Duration(milliseconds: 1500));
     _bottomNavBarSlideAnimation =
-        Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero)
-            .animate(_bottomNavBarSlideAnimationController);
+        Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(
+            CurvedAnimation(
+                curve: Curves.easeInOut,
+                parent: _bottomNavBarSlideAnimationController));
 
     Timer(const Duration(milliseconds: 6000), () {
       _bottomNavBarSlideAnimationController.forward();
@@ -153,6 +155,18 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     Timer(const Duration(milliseconds: 2000), () {
       _textOneAnimationController.forward();
     });
+  }
+
+  @override
+  void dispose() {
+    _bottomNavBarSlideAnimationController.dispose();
+    _gridSlideAnimationController.dispose();
+    _textOneAnimationController.dispose();
+    _textThreeFadeAnimationController.dispose();
+    _textTwoFadeAnimationController.dispose();
+    _textThreeSlideAnimationController.dispose();
+    _textTwoSlideAnimationController.dispose();
+    super.dispose();
   }
 
   @override
