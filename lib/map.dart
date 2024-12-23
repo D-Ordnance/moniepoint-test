@@ -146,11 +146,17 @@ class _MoniePointMapState extends State<MoniePointMap>
                   scaleAnimation: _scaleAnimation,
                   onTap: (p0) {
                     if (p0 == MarkerSelection.wallet) {
+                      _scaleMapMakerAnimationController.reset();
+                      _scaleMapMakerAnimationController.forward();
                       setState(() {
                         isWallet = true;
                       });
                     } else if (p0 == MarkerSelection.withoutLayout) {
-                      isWallet = false;
+                      _sizeMapMakerAnimationController.reset();
+                      _sizeMapMakerAnimationController.forward();
+                      setState(() {
+                        isWallet = false;
+                      });
                     }
                   },
                 )),

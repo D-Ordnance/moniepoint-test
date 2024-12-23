@@ -21,34 +21,41 @@ class MoniePointMapMaker extends StatefulWidget {
 class _MoniePointMapMakerState extends State<MoniePointMapMaker> {
   @override
   Widget build(BuildContext context) {
-    return ScaleTransition(
-      alignment: Alignment.bottomLeft,
-      scale: widget.scaleAnimation,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        decoration: const BoxDecoration(
-            color: TestColors.primaryColor,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
-                topRight: Radius.circular(10.0),
-                bottomRight: Radius.circular(10.0),
-                bottomLeft: Radius.circular(0))),
-        child: Stack(
-          children: [
-            Visibility(
-                visible: !widget.isWallet,
-                child: SvgPicture.asset('asset/image/building.svg')),
-            Visibility(
-              visible: widget.isWallet,
+    return widget.isWallet
+        ? ScaleTransition(
+            alignment: Alignment.bottomLeft,
+            scale: widget.scaleAnimation,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              decoration: const BoxDecoration(
+                  color: TestColors.primaryColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0),
+                      bottomRight: Radius.circular(10.0),
+                      bottomLeft: Radius.circular(0))),
               child: const MoniePointText(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   content: '10,3mn P',
                   color: TestColors.white),
-            )
-          ],
-        ),
-      ),
-    );
+            ),
+          )
+        : SizeTransition(
+            sizeFactor: widget.sizeAnimation,
+            axis: Axis.horizontal,
+            axisAlignment: 0,
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                decoration: const BoxDecoration(
+                    color: TestColors.primaryColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                        bottomRight: Radius.circular(10.0),
+                        bottomLeft: Radius.circular(0))),
+                child: SvgPicture.asset('asset/image/building.svg')),
+          );
   }
 }
